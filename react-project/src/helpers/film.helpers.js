@@ -14,3 +14,23 @@ export function getListOf(list, prop){
     },[]);
 
 }
+export function getFilmStats(list){
+    return list.reduce(
+        (stats,film)=>{
+            stats.total++;
+            stats.acc_score+=Number(film.rt_score);
+            stats.avg_score=stats.acc_score/stats.total;
+            if(stats==null||stats.latest<film.release_data){
+                stats.latest=film.release_date;
+            }
+        },
+        {
+        total: 0,
+        acc_score: 0,
+        avg_score:0,
+        latest:null,
+        },
+        
+    )
+    
+}

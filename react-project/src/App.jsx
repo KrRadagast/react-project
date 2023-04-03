@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import FilmsList from "./components/flimsfunction";
 import {BrowserRouter as Router, NavLink, Routes, Route} from "react-router-dom" 
 import  {HomePage}  from "./pages";
-import {FilmsPage} from "./pages";
+import {FilmsPage,SingleFilmPage} from "./pages";
 function App(props) {
 
     return (
@@ -21,8 +21,8 @@ function App(props) {
         
     <Routes>
         <Route path="/" element={<HomePage/>}/>
-
         <Route path="/films" element={<FilmsPage/>}/>
+        <Route path="film/:id" element={<SingleFilmPage/>}/>
     </Routes>
     </Router>
 );

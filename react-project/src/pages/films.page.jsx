@@ -4,26 +4,29 @@ import { Link } from "react-router-dom";
 export default function FilmsPage(props) {
   const [list, setList] = useState([]);
   let [searchDirector, setSearchDirector] = useState([]);
+
+
   function getFilms() {
     fetch("https://studioghibliapi-d6fc8.web.app/films")
       .then((response) => {
         return response.json();
       })
       .then((result) => {
-        console.log(result);
+        //console.log(result);
         setList(result);
       })
       .catch((error) => {
         console.log(error);
       });
   }
-  
   useEffect(() => {
     getFilms();
   }, []);
-let filmsByDirector=filterFilmsByDirector(list, searchDirector)
-let film=getFilmStats(filmsByDirector)
+let filmsByDirector=filterFilmsByDirector(list, searchDirector);
 let directors = getListOf(list, "director");
+const{total,avg_score,latestFilm}=getFilmStats(filmsByDirector);
+console.log(total,avg_score,latestFilm)
+
   return (
     <div>
         <h1>Studio Ghibli Films</h1>
@@ -43,6 +46,20 @@ let directors = getListOf(list, "director");
             </select>
           </div>
         </form>
+        <div>
+  <div>
+    <span># Of Films</span>
+    <span>{total}</span>
+  </div>
+  <div>
+    <span>Average Rating</span>
+    <span>{avg_score.toFixed(2)}</span>
+  </div>
+  <div>
+    <span>Latest Film</span>
+    <span>{latestFilm}</span>
+  </div>
+</div>
         <ul>
           {filmsByDirector.map((film) => {
             return <li key={film.id}>
@@ -53,7 +70,6 @@ let directors = getListOf(list, "director");
               </li>
           })}
         </ul>
-     
     </div>
   );
 }
